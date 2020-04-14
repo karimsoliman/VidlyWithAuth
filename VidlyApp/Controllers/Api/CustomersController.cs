@@ -22,9 +22,13 @@ namespace VidlyApp.Controllers.Api
 
         [Route("all")]
         [HttpGet]
-        public IHttpActionResult Customers()
+        public IHttpActionResult Customers(string query = null)
         {
-            var result = _context.Customers.Include(c => c.MemberShipType).Select(Mapper.Map<Customer, CustomerDTO>).ToList();
+            var customersQuery = _context.Customers.Include(c => c.MemberShipType);
+            if (!String.IsNullOrWhiteSpace(query))
+                customersQuery = customersQuery.Where(c => c.Name.Contains(query));
+
+            var result = customersQuery.ToList().Select(Mapper.Map<Customer, CustomerDTO>);
             return Ok(result);
         }
 

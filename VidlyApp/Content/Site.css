@@ -23,16 +23,26 @@ textarea {
     max-width: 280px;
 }
 
-.field-validation-error {
+.field-validation-error, 
+label.error {
     margin-left: 2px;
     color: red;
 }
 
-.input-validation-error {
+.input-validation-error, 
+input.error {
     border: 2px solid red;
 }
 
-.validation-summary-errors {
+.js-cancel {
+    cursor: pointer;
+}
+
+    .js-cancel:hover {
+        background: #bbb;
+    }
+
+/*.validation-summary-errors {
     margin-bottom: 2px;
     color: red;
-}
+}*/

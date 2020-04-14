@@ -13,7 +13,9 @@ namespace VidlyApp
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/bootbox.js",
                         "~/Scripts/DataTables/jquery.dataTables.js",
-                        "~/Scripts/DataTables/dataTables.bootstrap.js"));
+                        "~/Scripts/DataTables/dataTables.bootstrap.js",
+                        "~/Scripts/toastr.js",
+                        "~/Scripts/typeahead.bundle.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -26,7 +28,9 @@ namespace VidlyApp
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-dark.css",
                       "~/Content/DataTables/css/dataTables.bootstrap.css",
-                      "~/Content/Site.css"));
+                      "~/Content/Site.css",
+                      "~/Content/toastr.css",
+                      "~/Content/typeahead.css"));
         }
     }
 }
