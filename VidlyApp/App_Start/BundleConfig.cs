@@ -15,6 +15,7 @@ namespace VidlyApp
                         "~/Scripts/DataTables/jquery.dataTables.js",
                         "~/Scripts/DataTables/dataTables.bootstrap.js",
                         "~/Scripts/toastr.js",
+                        "~/Scripts/bootstrap-datepicker.js",
                         "~/Scripts/typeahead.bundle.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -26,10 +27,11 @@ namespace VidlyApp
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap-dark.css",
+                      "~/Content/bootstrap-lumen.css",
                       "~/Content/DataTables/css/dataTables.bootstrap.css",
                       "~/Content/Site.css",
                       "~/Content/toastr.css",
+                      "~/Content/bootstrap-datepicker.css",
                       "~/Content/typeahead.css"));
         }
     }

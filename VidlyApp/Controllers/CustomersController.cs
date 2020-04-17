@@ -39,6 +39,7 @@ namespace VidlyApp.Controllers
         public ActionResult Edit(int id)
         {
             var customer = _context.Customers.Include(c => c.MemberShipType).FirstOrDefault(c => c.Id == id);
+            //customer.Birthdate = Convert.ToDateTime(customer.Birthdate.Value.ToString("dd/MM/yyyy HH:mm:ss"));
 
             if (customer == null)
                 return HttpNotFound();

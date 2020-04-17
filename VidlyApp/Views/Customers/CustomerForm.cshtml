@@ -17,7 +17,7 @@
                 <div class="form-group row">
                     @Html.LabelFor(m => m.Customer.Name, new { @class = "col-sm-3 col-form-label" })
                     <div class="col-sm-9">
-                        @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control", @autocomplete = "off" })
                         @Html.ValidationMessageFor(m => m.Customer.Name)
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                 <div class="form-group row">
                     @Html.LabelFor(m => m.Customer.Birthdate, new { @class = "col-sm-3 col-form-label" })
                     <div class="col-sm-9">
-                        @Html.TextBoxFor(m => m.Customer.Birthdate, "{0: dd/MM/yyyy}", new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.Customer.Birthdate, "{0: dd/MM/yyyy}", new { @class = "form-control", @autocomplete = "off", @id = "datepicker"})
                         @Html.ValidationMessageFor(m => m.Customer.Birthdate)
                     </div>
                 </div>
@@ -53,6 +53,11 @@
 @section scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $('#datepicker').datepicker({ uiLibrary: 'bootstrap', orientation: "bottom auto", todayHighlight: true, format:"dd MM yyyy" });
+        });
+    </script>
 }
 
 

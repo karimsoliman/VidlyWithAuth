@@ -30,9 +30,9 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
-                        <ul id="movies" class="list-group"></ul>
-                    </div>
+                    <table id="movies" class="table table-bordered table-hover">
+                        <tbody></tbody>
+                    </table>
                 </div>
 
                 <button class="btn btn-primary col-md-2 col-md-offset-3">Submit</button>
@@ -49,7 +49,7 @@
     <script>
         $(document).ready(function () {
 
-            var vm = { MovieIDs: [] };
+            var vm = { Movies: [] };
             var movies = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -76,9 +76,11 @@
                     display: 'name',
                     source: movies
                 }).on("typeahead:select", function (e, movie) {
-                    $("#movies").append("<li class='list-group-item d-flex justify-content-between align-items-center'>" + movie.name + "<span movie-id='" + movie.id + "' class='badge badge-primary badge-pill js-cancel'>x</span>" + "</li>");
+                    $('#movie').removeClass('error').next('label.error').remove();
+                    var $new_Row = $("<tr align='center'> <td style='vertical-align:middle'>" + movie.name + "</td> <td> <input type='text' class='datepicker form-control'/> </td> <td style='vertical-align:middle'><span movie-id='" + movie.id + "' class='badge badge-primary badge-pill js-cancel'>x</span></td> </tr>");
+                    $new_Row.find('input').datepicker({ uiLibrary: 'bootstrap', orientation: "bottom auto", todayHighlight: true });
+                    $("#movies tbody").append($new_Row);
                     $("#movie").typeahead("val", "");
-                    vm.MovieIDs.push(movie.id);
                 });
 
             $('#movies').on("click", ".js-cancel", function () {
@@ -86,9 +88,9 @@
                 var number = parseInt(cancel.attr("movie-id"));
                 var index = vm.MovieIDs.indexOf(number);
                 if (index > -1) {
-                    vm.MovieIDs.splice(index, 1);
+                    vm.Movies.splice(index, 1);
                 }
-                cancel.parent("li").remove();
+                cancel.parents("tr").remove();
             });
 
             $('#customer').typeahead(
@@ -101,6 +103,7 @@
                     source: customers
                 }).on("typeahead:select", function (e, customer) {
                     vm.CustomerID = customer.id;
+                    $('#customer').removeClass('error').next('label.error').remove();
                 });
 
             $.validator.addMethod("validCustomerWithId", function () {
@@ -108,7 +111,7 @@
             }, "Please select a valid customer.");
 
             $.validator.addMethod("atLeastOneMovie", function () {
-                return vm.MovieIDs.length > 0;
+                return $('#movies tr').length > 0;
             }, "Please select at least one movie.");
 
             var validator = $("#newRental").validate({
@@ -118,6 +121,14 @@
                 },
 
                 submitHandler: function () {
+                    debugger;
+                    var x = $("#movies tbody").find("tr");
+                    $("#movies tbody tr").each(function () {
+                        var returndate = $(this).find('td:eq(1)').find('input').val();
+                        var movieId = $(this).find('td:eq(2)').find('.js-cancel').attr("movie-id");
+                        vm.Movies.push({ movieId: movieId, returnDate: returndate});
+                    });
+                    
                     $.ajax({
                         url: "/api/rentals/rent",
                         method: "post",
@@ -136,6 +147,7 @@
                     return false;
                 }
             });
+
 
             //$('#newRental').submit(function (e) {
             //    e.preventDefault();

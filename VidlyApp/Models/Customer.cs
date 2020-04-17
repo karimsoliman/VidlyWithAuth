@@ -14,6 +14,8 @@ namespace VidlyApp.Models
         public string Name { get; set; }
         public bool IsSubscribedToNewsLetter { get; set; }
         [Display(Name = "Date of Birth")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+        [DataType(DataType.Date)]
         [Min18YearsValidation]
         public DateTime? Birthdate { get; set; }
         public MemberShipType MemberShipType { get; set; }
